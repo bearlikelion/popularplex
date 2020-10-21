@@ -66,7 +66,6 @@ def generate_playlists(popular_dict):
     plex.createPlaylist(config['Playlist']['TV'], shows)
 
 
-
 if __name__ == '__main__':
     config = configparser.ConfigParser()
     config.read('config.ini')
