@@ -1,0 +1,15 @@
+[Plex]
+url = http://plex:32400
+token = ACCESSTOKEN
+username = bearlikelion
+password = password
+server = plex.arneman.home
+
+[Tautulli]
+url = http://plexpy
+apikey = APIKEY
+timerange = 7
+
+[Playlist]
+movies = Most Popular Movies
+tv = Most Popular TV
