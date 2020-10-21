@@ -1,4 +1,4 @@
-"""Generate Plex Playlists based on most watched from Tatulli
+"""Generate Plex Playlists based on most popular from Tatulli
 """
 import configparser
 import requests
