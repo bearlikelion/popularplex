@@ -1,6 +1,6 @@
-# Plex Top Playlist
+# Popular Plex
 
-This script is designed to run weekly, generating a playlist in Plex of most popular Movies and Television based on the data from the Tautulli API. It uses the [python-plexapi](https://github.com/pkkid/python-plexapi) package and [requests](http://python-requests.org/). It provides two options for login, Server/Access Token or Username/Password/Server, access token is preferred and when set username/password/server can be blank.
+This script is designed to run weekly, generating collections in Plex of most popular Movies and Television based on the data from the Tautulli API. It uses the [python-plexapi](https://github.com/pkkid/python-plexapi) package and [requests](http://python-requests.org/). It provides two options for login, Server/Access Token or Username/Password/Server, access token is preferred and when set username/password/server can be blank.
 
 ![Example Screenshot of Popular Playlists](Screenshot.png)
 

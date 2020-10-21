@@ -1,11 +1,12 @@
 """Generate Plex Playlists based on most popular from Tatulli
 """
 import configparser
-import requests
-import plexapi.exceptions
 
+import plexapi.exceptions
+import requests
 from plexapi.myplex import MyPlexAccount
 from plexapi.server import PlexServer
+
 
 def get_popular():
     """Get Home Statistics from Tautulli API
@@ -27,43 +28,40 @@ def get_popular():
     return _popular
 
 
-def generate_playlists(popular_dict):
-    """Delete and generate popular playlists
+def clear_collections():
+    print("Clear Collections")
+    movies_collection = plex.library.section(config['Libraries']['movies']).collection()
+    for m_collection in movies_collection:
+        if m_collection.title == config['Collections']['movies']:
+            for movies in m_collection.children:
+                print("    Removing %s from %s" % (movies.title, config['Collections']['movies']))
+                movies.removeCollection(config['Collections']['movies'])
+
+    tv_collection = plex.library.section(config['Libraries']['tv']).collection()
+    for t_collection in tv_collection:
+        if t_collection.title == config['Collections']['tv']:
+            for tv in t_collection.children:
+                print("    Removing %s from %s" % (tv.title, config['Collections']['tv']))
+                tv.removeCollection(config['Collections']['movies'])
+
+
+def generate_collections(popular_dict):
+    """Delete and generate collections based on popular items
 
     Args:
-        popular (dict): Dict of popular Movies and TV from Tautulli API
+        popular_dict (dict): Popular Movies and TV Dictionary
     """
-    try:
-        movies_playlist = plex.playlist(config['Playlist']['Movies'])
-        if movies_playlist:
-            print ("Deleting Movies Playlist")
-            movies_playlist.delete()
-    except plexapi.exceptions.NotFound:
-        pass
-    except plexapi.exceptions.BadRequest:
-        pass
-
-    try:
-        tv_playlist = plex.playlist(config['Playlist']['TV'])
-        if tv_playlist:
-            print ("Deleting TV Playlist")
-            tv_playlist.delete()
-    except plexapi.exceptions.NotFound:
-        pass
-    except plexapi.exceptions.BadRequest:
-        pass
-
-    print("Creating Movie Playlist")
-    movies = []
+    print("Creating Movie Collection")
     for movie in popular_dict['movies']:
-        movies.append(plex.search(movie['title'])[0])
-    plex.createPlaylist(config['Playlist']['Movies'], movies)
+        _movie = plex.search(movie['title'])[0]
+        _movie.addCollection(config['Collections']['movies'])
+        print("    Added %s to %s" % (_movie.title, config['Collections']['movies']))
 
-    print("Creating TV Playlist")
-    shows = []
+    print("Creating TV Collection")
     for show in popular_dict['tv']:
-        shows.append(plex.search(show['title'])[0])
-    plex.createPlaylist(config['Playlist']['TV'], shows)
+        _show = plex.search(show['title'])[0]
+        _show.addCollection(config['Collections']['tv'])
+        print("    Added %s to %s" % (_show.title, config['Collections']['tv']))
 
 
 if __name__ == '__main__':
@@ -85,4 +83,5 @@ if __name__ == '__main__':
         Exception("[Config file invalid] - Failed to login to Plex")
 
     popular = get_popular()
-    generate_playlists(popular)
+    clear_collections()
+    generate_collections(popular)
