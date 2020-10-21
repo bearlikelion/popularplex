@@ -23,5 +23,5 @@ cp config.ini.example config.ini
 
 ```sh
 pip install -r requirements.txt
-python plextopplaylist.py
+python popular_plex.py
 ```
