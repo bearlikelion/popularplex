@@ -1,9 +1,8 @@
 """Generate Plex Playlists based on most popular from Tatulli
 """
 import configparser
-
-import plexapi.exceptions
 import requests
+
 from plexapi.myplex import MyPlexAccount
 from plexapi.server import PlexServer
 
@@ -29,6 +28,8 @@ def get_popular():
 
 
 def clear_collections():
+    """ Clear media items from collections
+    """
     print("Clear Collections")
     movies_collection = plex.library.section(config['Libraries']['movies']).collection()
     for m_collection in movies_collection:
@@ -40,9 +41,9 @@ def clear_collections():
     tv_collection = plex.library.section(config['Libraries']['tv']).collection()
     for t_collection in tv_collection:
         if t_collection.title == config['Collections']['tv']:
-            for tv in t_collection.children:
-                print("    Removing %s from %s" % (tv.title, config['Collections']['tv']))
-                tv.removeCollection(config['Collections']['movies'])
+            for show in t_collection.children:
+                print("    Removing %s from %s" % (show.title, config['Collections']['tv']))
+                show.removeCollection(config['Collections']['movies'])
 
 
 def generate_collections(popular_dict):
