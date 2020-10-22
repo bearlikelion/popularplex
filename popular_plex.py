@@ -2,6 +2,7 @@
 """
 import configparser
 import requests
+import os
 
 from plexapi.myplex import MyPlexAccount
 from plexapi.server import PlexServer
@@ -67,8 +68,9 @@ def generate_collections(popular_dict):
 
 
 if __name__ == '__main__':
+    print()
     config = configparser.ConfigParser()
-    config.read('config.ini')
+    config.read(os.path.dirname(__file__) + os.path.sep + 'config.ini')
 
     # Login to Plex
     if (config['Plex']['url'] != '' and config['Plex']['token'] != ''):
