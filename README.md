@@ -25,3 +25,11 @@ cp config.ini.example config.ini
 pip install -r requirements.txt
 python popular_plex.py
 ```
+
+## Scheduling
+
+For Linux schedule using a cronjob, on Windows create a scheduled task to launch the script
+
+```sh
+0       3       *       *       6       python3 /path/popular_plex.py
+```
