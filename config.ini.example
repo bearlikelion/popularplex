@@ -9,6 +9,7 @@ server = plex.arneman.home
 url = http://plexpy
 apikey = API_KEY
 timerange = 7
+count = 10
 
 [Collections]
 movies = Most Popular Movies

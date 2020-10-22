@@ -13,7 +13,8 @@ def get_popular():
     print("Getting popular media")
     stats = requests.get(config['Tautulli']['url'] + '/api/v2?apikey=' +
                         config['Tautulli']['apikey'] + '&cmd=get_home_stats&time_range=' +
-                        config['Tautulli']['timerange'])
+                        config['Tautulli']['timerange'] + "&stats_count=" +
+                        config['Tautulli']['count'])
 
     response = stats.json()
     _popular = {}
@@ -47,20 +48,20 @@ def clear_collections():
 
 
 def generate_collections(popular_dict):
-    """Delete and generate collections based on popular items
+    """ Generate collections based on popular items
 
     Args:
         popular_dict (dict): Popular Movies and TV Dictionary
     """
     print("Creating Movie Collection")
     for movie in popular_dict['movies']:
-        _movie = plex.search(movie['title'])[0]
+        _movie = plex.fetchItem(movie['rating_key'])
         _movie.addCollection(config['Collections']['movies'])
         print("    Added %s to %s" % (_movie.title, config['Collections']['movies']))
 
     print("Creating TV Collection")
     for show in popular_dict['tv']:
-        _show = plex.search(show['title'])[0]
+        _show = plex.fetchItem(show['rating_key'])
         _show.addCollection(config['Collections']['tv'])
         print("    Added %s to %s" % (_show.title, config['Collections']['tv']))
 
