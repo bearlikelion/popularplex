@@ -9,7 +9,7 @@ The idea behind this project was to recreate Netflix's 'What's Popular' list
 
 ## Requirements
 
-- Python
+- Python 3
 - [Plex](https://plex.tv)
 - [Tautulli](https://github.com/Tautulli/Tautulli)
 
