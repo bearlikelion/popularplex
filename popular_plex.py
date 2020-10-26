@@ -68,7 +68,6 @@ def generate_collections(popular_dict):
 
 
 if __name__ == '__main__':
-    print()
     config = configparser.ConfigParser()
 
     if (os.path.exists('config.ini')):
