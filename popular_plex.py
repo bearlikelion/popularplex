@@ -70,7 +70,11 @@ def generate_collections(popular_dict):
 if __name__ == '__main__':
     print()
     config = configparser.ConfigParser()
-    config.read(os.path.dirname(__file__) + os.path.sep + 'config.ini')
+
+    if (os.path.exists('config.ini')):
+        config.read('config.ini')
+    else:
+        config.read(os.path.dirname(__file__) + os.path.sep + 'config.ini')
 
     # Login to Plex
     if (config['Plex']['url'] != '' and config['Plex']['token'] != ''):
