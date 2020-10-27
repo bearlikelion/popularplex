@@ -29,18 +29,18 @@ def get_popular():
     return _popular
 
 
-def clear_collections():
+def clear_collections(movies_library, tv_library):
     """ Clear media items from collections
     """
     print("Clear Collections")
-    movies_collection = plex.library.section(config['Libraries']['movies']).collection()
+    movies_collection = movies_library.collection()
     for m_collection in movies_collection:
         if m_collection.title == config['Collections']['movies']:
             for movies in m_collection.children:
                 print("    Removing %s from %s" % (movies.title, config['Collections']['movies']))
                 movies.removeCollection(config['Collections']['movies'])
 
-    tv_collection = plex.library.section(config['Libraries']['tv']).collection()
+    tv_collection = tv_library.collection()
     for t_collection in tv_collection:
         if t_collection.title == config['Collections']['tv']:
             for show in t_collection.children:
@@ -48,7 +48,7 @@ def clear_collections():
                 show.removeCollection(config['Collections']['movies'])
 
 
-def generate_collections(popular_dict):
+def generate_collections(popular_dict, movies_library, tv_library):
     """ Generate collections based on popular items
 
     Args:
@@ -57,14 +57,16 @@ def generate_collections(popular_dict):
     print("Creating Movie Collection")
     for movie in popular_dict['movies']:
         _movie = plex.fetchItem(movie['rating_key'])
-        _movie.addCollection(config['Collections']['movies'])
-        print("    Added %s to %s" % (_movie.title, config['Collections']['movies']))
+        if _movie.librarySectionID == movies_library.key:
+            _movie.addCollection(config['Collections']['movies'])
+            print("    Added %s to %s" % (_movie.title, config['Collections']['movies']))
 
     print("Creating TV Collection")
     for show in popular_dict['tv']:
         _show = plex.fetchItem(show['rating_key'])
-        _show.addCollection(config['Collections']['tv'])
-        print("    Added %s to %s" % (_show.title, config['Collections']['tv']))
+        if _show.librarySectionID == tv_library.key:
+            _show.addCollection(config['Collections']['tv'])
+            print("    Added %s to %s" % (_show.title, config['Collections']['tv']))
 
 
 if __name__ == '__main__':
@@ -89,6 +91,9 @@ if __name__ == '__main__':
     else:
         Exception("[Config file invalid] - Failed to login to Plex")
 
-    popular = get_popular()
-    clear_collections()
-    generate_collections(popular)
+    movies_library = plex.library.section(config['Libraries']['movies'])
+    tv_library = plex.library.section(config['Libraries']['tv'])
+
+    clear_collections(movies_library, tv_library)
+    popular = get_popular()    
+    generate_collections(popular, movies_library, tv_library)
