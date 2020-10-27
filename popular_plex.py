@@ -54,19 +54,33 @@ def generate_collections(popular_dict, movies_library, tv_library):
     Args:
         popular_dict (dict): Popular Movies and TV Dictionary
     """
+    current_int = 0
+    limit = int(config['Collections']['limit'])
+
     print("Creating Movie Collection")
     for movie in popular_dict['movies']:
-        _movie = plex.fetchItem(movie['rating_key'])
-        if _movie.librarySectionID == movies_library.key:
-            _movie.addCollection(config['Collections']['movies'])
-            print("    Added %s to %s" % (_movie.title, config['Collections']['movies']))
+        if current_int < limit:
+            _movie = plex.fetchItem(movie['rating_key'])
+            if _movie.librarySectionID == movies_library.key:
+                _movie.addCollection(config['Collections']['movies'])
+                print("    Added %s to %s" % (_movie.title, config['Collections']['movies']))
+                current_int += 1
+        else:
+            print("Movie Collection limit reached")
+            break
 
     print("Creating TV Collection")
+    current_int = 0
     for show in popular_dict['tv']:
-        _show = plex.fetchItem(show['rating_key'])
-        if _show.librarySectionID == tv_library.key:
-            _show.addCollection(config['Collections']['tv'])
-            print("    Added %s to %s" % (_show.title, config['Collections']['tv']))
+        if current_int < limit:
+            _show = plex.fetchItem(show['rating_key'])
+            if _show.librarySectionID == tv_library.key:
+                _show.addCollection(config['Collections']['tv'])
+                print("    Added %s to %s" % (_show.title, config['Collections']['tv']))
+                current_int += 1
+        else:
+            print("TV Collection limit reached")
+            break
 
 
 if __name__ == '__main__':
@@ -95,5 +109,5 @@ if __name__ == '__main__':
     tv_library = plex.library.section(config['Libraries']['tv'])
 
     clear_collections(movies_library, tv_library)
-    popular = get_popular()    
+    popular = get_popular()
     generate_collections(popular, movies_library, tv_library)

@@ -14,6 +14,7 @@ count = 10
 [Collections]
 movies = Most Popular Movies
 tv = Most Popular TV
+limit = 10
 
 [Libraries]
 movies = Movies
