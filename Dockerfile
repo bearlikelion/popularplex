@@ -6,6 +6,8 @@ COPY requirements.txt /usr/src/popularplex
 
 COPY config.ini /usr/src/popularplex
 
-RUN pip install -r /usr/src/popularplex/requirements.txt
+WORKDIR /usr/src/popularplex
 
-CMD ["python", "/usr/src/popularplex/popular_plex.py"]
+RUN pip install -r requirements.txt
+
+CMD ["python", "popular_plex.py"]
