@@ -1,12 +1,8 @@
 FROM python:3
 
-ADD popular_plex.py /usr/src/popularplex
+COPY . /opt/popularplex
 
-COPY requirements.txt /usr/src/popularplex
-
-COPY config.ini /usr/src/popularplex
-
-WORKDIR /usr/src/popularplex
+WORKDIR /opt/popularplex
 
 RUN pip install -r requirements.txt
 
