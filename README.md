@@ -27,6 +27,7 @@ python popular_plex.py
 ```
 
 ### Running with Docker
+[Docker Hub](https://hub.docker.com/r/bearlikelion/popularplex)
 
 ```sh
 docker build -t popularplex .
