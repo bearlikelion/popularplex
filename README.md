@@ -26,6 +26,13 @@ pip install -r requirements.txt
 python popular_plex.py
 ```
 
+### Running with Docker
+
+```sh
+docker build -t popularplex .
+docker run popularplex
+```
+
 ## Scheduling
 
 For Linux schedule using a cronjob, on Windows create a scheduled task to launch the script
