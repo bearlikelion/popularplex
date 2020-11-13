@@ -1,4 +1,4 @@
-FROM python:3
+FROM python:slim
 
 COPY . /opt/popularplex
 
